@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Css variable</title>
+    <style>
+        :root{
+            --color:rgb(154, 154, 237);
+            --selector: rgb(174,174,222);
+        }
+        *{
+            font-family: 'Courier New', Courier, monospace;
+        }
+    div :first-child{
+        background-color: var(--color); 
+        border: 2px solid rgb(29, 226, 226);
+        /* var()  are used to take acolor of root*/
+    }
+    /* ul li:first-child{
+        background-color: rgb(99, 190, 9);
+    } */
+    .Variable{
+        background: linear-gradient(230deg,#3defe0,#e09e9e,#761);
+        border-radius: 2px rgb(182, 19, 19);
+        font-family: 'Segoe UI',sans-serif;
+            background: linear-gradient(270deg,#ff6ec4,#7873f5,#00c9ff);
+            min-height:80vh;
+            font-style: italic;
+            border: 2px solid black;
+    }
+    div h1{
+        justify-content: center;
+        color:white;margin-bottom:auto;
+        padding-right: 50px;
+        text-shadow: #da1919;
+
+    }
+    
+    </style>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <ul>
+                <li>Margin</li>
+                <li>Border</li>
+                <li>padding</li>
+                <li>Content</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="Variable">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum laudantium quam incidunt ratione harum. Beatae,
+        officia temporibus consequuntur sapiente rerum sint distinctio dolorem nihil sed ab repudiandae minus obcaecati
+        architecto ducimus tempora animi dolores quidem explicabo ex a est cupiditate, voluptatum totam? Dolore ab
+        quisquam molestiae! Assumenda eius eum quae.
+
+        <h1> Welcome</h1>
+    </div>
+</body>
+
+</html>
