@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex Box</title>
+    <style>
+    .container{
+        
+        border: 2px solid black;
+        background-color: beige;
+        display: flex;
+        height: 89vh;
+        justify-content: center;
+        /* align-items: center; */
+        /* align-:content:center ; */
+        flex-direction: column;
+        /* flex-wrap: wrap; */
+        /* flexbox ka use line ko inline karne ma hota h */
+        /* flex-flow: row-reverse; */
+        row-gap: 10px;
+        /* column-gap: 10px; */
+    }
+    .all{
+        flex-grow: 2;
+        margin: 30px;
+        border: 2px solid black;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        border-radius: 22px ;
+        background-color: aqua;
+    }
+    .item{
+        height: 100px;
+        margin: 10px;
+        width: 100px;
+        background-color: rgb(204, 152, 252);
+        border: 2px solid rgb(0, 0, 0);
+    }
+    .item1{
+        flex-grow: 2;
+        align-self: flex-start;
+
+    }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <div class="all">Css Flex Box...</div>
+            <div class="item item 1"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+        </div>
+    </main>
+</body>
+</html>
