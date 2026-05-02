@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transforms in Css </title>
+    <Style>
+        .box{
+            height: 50px;
+            width: 50px ;
+            background-color: rgb(126, 195, 43);
+            border: 2px solid rgb(8, 8, 8);
+            /* transform:rotate(50deg); */
+            /* transform: scale(34deg); */
+            transform: skew(34deg) translate(32%) ;
+            transform-origin:53deg;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px ;
+            margin: 40px ;
+
+        }
+        .container{
+            height: 100vw;
+            width: 80vh ;
+            border: 2px solid rgb(237, 17, 17);
+
+        }
+        </Style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">box1
+
+        </div>
+
+
+    </div>
+</body>
+</html>
