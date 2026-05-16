@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC display Property</title>
+    <style>
+        :root {
+            /* --bg1: #0f2027;
+            --bg2: #203a43;
+            --bg3:#2c5364; */
+
+            --card-bg: rgba(255,255,255,0.08);
+            --border: rgba(255,255,255,0.2);
+            --text: #ffffff;
+        }
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .box {
+            border: 2px solid rgb(106, 13, 13);
+            /* display: inline ; */
+            font-family: 'Segoe UI',sans-serif;
+            background: linear-gradient(270deg,#ff6ec4,#7873f5,#00c9ff);
+            min-height:100vh;
+            font-style: italic;
+            /* box-sizing: border-box; */
+            /* background: linear-gradient(135deg,rgb(84, 28, 28),#1e3c72,#2a5298,#762ba2);*/
+            /* background:  var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; */
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            background-size: 600% 600%;
+            animation: gradientMove 10s ease infinite;
+        
+        }
+        /* Background Animation */
+        @keyframes gradientMove{
+            0% { background-position: 0% 50%;}
+            50% { background-position: 100% 50%;}
+            100% { background-position: 0% 50%;}
+        }
+        .card{
+            width: 300px;
+            padding: 2rem;
+            border-radius: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            color: var(--text);
+            text-align: center;
+
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+
+        }
+        /* neon Border */
+        .card::before{
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(45deg,#00f5ff,#ff00c8,#00f5ff);
+            -webkit-mask: linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+
+        }
+        /* Hower Effect */
+        .card:hover{
+            transform: rotate(10deg) rotate(10deg) scale(1.05);
+        }
+        /* Typography */
+        .card h1{
+            /* font-size: 1.5rem;
+            margin-bottom: 10px; */
+            margin-bottom: 10px;
+        }
+        .card p{
+            font-size: 1rem;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="box">
+        <section class="card">
+            <h1>I am Raj</h1>
+            <p> I am a Software Developer</p>
+        </section>
+        <section class="card">
+            <h1>Welcome</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores veniam sequi dicta?</p>
+        </section>
+    </main>
+    
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    background-color: black;
+}
+.main{
+    position: relative;
+    background-image:url(https://i.pinimg.com/736x/19/8b/2f/198b2f01e73b905772279616eccc7c65.jpg) ;
+    height: 70vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: max(1000px,100vw);
+}
+.main.box{
+    position: absolute;
+    top: 0;
+    height: 70vh;
+    width: 100%;
+    opacity: 0.69;
+    background-color: black;
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    max-width: 60vw;
+    margin: auto;
+    align-items: center;
+    height: 63px ;
+}
+nav img{
+    width:114px ;
+    position: relative;
+    z-index: 10;
+}
+nav button{
+    position: relative;
+    z-index: 10;
+}
+.hero{
+    height: calc(100% - 62px );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    position: relative;
+    padding:0 29px ;
+    text-align: center;
+    
+}
+.sepration{
+    height: 7px ;
+    background-color: rgb(100, 96, 96);
+}
+.btn{
+    padding:  3px 8px ;
+    font-weight: bold;
+    background-color:  rgba(23,23,23,0.2 );
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px ;
+    cursor: pointer;
+}
+.hero-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px ;
+}
+.btn-red-btn {
+    background-color: red;
+    padding: 3px 24px ;
+    font-size: 20px ;
+    color:white ;
+    cursor: pointer;
+
+}
+.btn-sm{
+    font-family: 'poppins',sans-serif;
+    background-color: rgb(254, 4, 4);
+    color: white;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 4px  8px ;
+    border: 1px solid white;
+    border-radius: 4px ;
+}
+.main input{
+    padding: 7px 101px 8px 14px  ;
+    color: white;
+    font-weight: 900;
+    font-size: 12px ;
+    border-radius: 4px ;
+    background-color: rgba(23,23,23,0.2 );
+    border: 1px solid rgba(246,238, 238, 0.5);
+}
+.first{
+    padding: 50px ;
+    display: flex;
+    justify-content: center;
+    max-width: 70vw ;
+    margin: auto;
+    color: white ;
+    justify-content: center;
+    align-items: center;
+}
+.sec-image img{
+    width: 30vw;
+    position: relative;
+    z-index: 10;
+}
+.sec-image{
+    position: relative;
+}
+.sec-image2 img{
+    width: 30vw;
+    position:relative;
+    z-index: 10;
+}
+section.first > div{
+    display: flex;
+    flex-direction: column;
+}
+section.first > div:first-child{
+    font-size: 48px ;
+    font-weight: bolder;
+}
+section.first > div:nth-child(2){
+    font-size: 24px ;
+    font-weight: bolder;
+
+
+}
+.feq h2{
+    text-align: center;
+    font-size: 48px;
+}
+.feq{
+    background-color: black;
+    color: white;
+    padding: 34px ;
+    font-size: 24px ;
+
+
+}
+.feqbox:hover{
+    background-color: rgb(159, 106, 106);
+    color: white;
+}
+.feqbox{
+    transition: all 2s ease-out;
+    display: flex;
+    background-color:#2d2d2d;
+    color: rgb(245, 240, 240);
+    padding: 24px ;
+    font-weight: 600;
+    margin: auto;
+    margin-top: 24px;
+    justify-content:space-between ;
+    cursor: pointer;
+}
+.footer-item{
+    display: flex;
+    flex-direction: column;
+}
+footer{
+    color: white;
+}
+footer span{
+    margin: 2px 30vw ;
+    text-align: center;
+}
+.footer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    color: white;
+    max-width: 60vw;
+    margin: auto;
+}

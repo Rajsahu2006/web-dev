@@ -1,0 +1,133 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins',sans-serif;
+}
+body{
+    display: flex;
+    height: 100vh;
+    background: linear-gradient(135deg,#667eea,#762ba2);
+    overflow: hidden;
+    transition: 0.5s;
+}
+/* Dark mode */
+.dark{
+    background: #111;
+    color: white;
+}
+/* profile */
+.profile{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.profile img{
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+/* Bottom */
+#modeToggle{
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+/* progress bar */
+.progress{
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    height: 10px;
+    margin-top: 10px;
+}
+.progress-bar{
+    height: 10px;
+    background: white;
+    border-radius: 20px;
+    transition: 1s;
+}
+/* sidebar */
+.sidebar{
+    width: 250px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    color: white;
+}
+.sidebar h2{
+    margin-bottom:30px ;
+}
+.sidebar ul li{
+    padding: 12px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+.sidebar ul li:hover{
+    background: rgba(255,255,255,0.2);
+}
+
+/* main */
+.main{
+    flex: 1;
+    padding: 40px;
+    color: white;
+}
+.section{
+    display: none;
+}
+.active{
+    display: block;
+}
+button{
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.cards{
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+.cards{
+    flex: 1;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1) ;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: 0.4s;
+}
+.card:hover{
+    transform: translate(-10px);
+}
+/* Chat box */
+#chatBox{
+    height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #e5ddd5;
+}
+.message {
+    max-width: 60%;
+    padding: 8px 12px;
+    margin: 6px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+.sent {
+    background: #dcf8c6;
+    margin-left: auto;
+    text-align: right;
+}
+.received {
+    background: white;
+    margin-right: auto;
+}
+.time {
+    font-size: 10px;
+    color: gray;
+}

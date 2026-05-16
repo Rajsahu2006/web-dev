@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulse — Social</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --card: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0f0f8;
+    --text2: #8888aa;
+    --text3: #555570;
+    --accent: #7c6cfc;
+    --accent2: #fc6cf0;
+    --accent3: #6cfcd8;
+    --story1: #fc6cf0;
+    --story2: #7c6cfc;
+    --danger: #fc4c4c;
+    --success: #4cfca0;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.4);
+    --shadow-sm: 0 2px 12px rgba(0,0,0,0.3);
+    --font: 'DM Sans', sans-serif;
+    --font-head: 'Syne', sans-serif;
+  }
+  [data-theme="light"] {
+    --bg: #f2f2fa;
+    --bg2: #e8e8f4;
+    --bg3: #ddddf0;
+    --card: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --text: #0e0e1a;
+    --text2: #5555778;
+    --text3: #aaaacc;
+    --shadow: 0 8px 32px rgba(100,100,180,0.12);
+    --shadow-sm: 0 2px 12px rgba(100,100,180,0.08);
+  }
+  [data-theme="light"] { --text2: #666688; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+  /* ─── AUTH SCREEN ─── */
+  #auth-screen {
+    position: fixed; inset: 0; z-index: 999;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .auth-box {
+    width: 400px; max-width: 94vw;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 36px;
+    box-shadow: var(--shadow);
+    animation: fadeUp 0.5s ease;
+  }
+  .auth-logo {
+    font-family: var(--font-head);
+    font-size: 2rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .auth-sub { color: var(--text2); font-size: 0.9rem; margin-bottom: 32px; }
+  .auth-tabs { display: flex; gap: 4px; background: var(--bg3); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 28px; }
+  .auth-tab {
+    flex: 1; padding: 8px; text-align: center; border-radius: 8px;
+    cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--text2);
+    transition: all 0.2s;
+  }
+  .auth-tab.active { background: var(--accent); color: #fff; }
+  .auth-form { display: flex; flex-direction: column; gap: 14px; }
+  .auth-form input {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 12px 16px;
+    color: var(--text); font-family: var(--font); font-size: 0.9rem;
+    outline: none; transition: border 0.2s;
+  }
+  .auth-form input:focus { border-color: var(--accent); }
+  .auth-form input::placeholder { color: var(--text3); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none; border-radius: var(--radius-sm); padding: 13px;
+    color: #fff; font-family: var(--font-head); font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: opacity 0.2s, transform 0.1s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* ─── SIDEBAR ─── */
+  #sidebar {
+    width: 240px; min-width: 240px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    padding: 24px 16px;
+    gap: 4px;
+    transition: background 0.3s;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    font-family: var(--font-head);
+    font-size: 1.6rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    padding: 8px 12px 20px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 14px; border-radius: var(--radius-sm);
+    cursor: pointer; color: var(--text2); font-size: 0.93rem;
+    font-weight: 500; transition: all 0.2s; position: relative;
+    user-select: none;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active { background: var(--bg3); color: var(--accent); }
+  .nav-item .icon { font-size: 1.2rem; width: 22px; text-align: center; }
+  .nav-badge {
+    margin-left: auto; background: var(--accent);
+    color: #fff; font-size: 0.68rem; font-weight: 700;
+    padding: 2px 7px; border-radius: 99px;
+  }
+  .sidebar-spacer { flex: 1; }
+  .sidebar-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--bg3);
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .sidebar-user:hover { opacity: 0.8; }
+  .sidebar-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem; color: #fff; flex-shrink: 0;
+    overflow: hidden;
+  }
+  .sidebar-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .sidebar-user-info { flex: 1; min-width: 0; }
+  .sidebar-user-name { font-size: 0.88rem; font-weight: 600; truncate; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sidebar-user-handle { font-size: 0.75rem; color: var(--text2); }
+
+  /* ─── MAIN ─── */
+  #main {
+    flex: 1; display: flex; flex-direction: column; overflow: hidden;
+  }
+
+  /* ─── TOPBAR ─── */
+  #topbar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    transition: background 0.3s;
+  }
+  .topbar-title {
+    font-family: var(--font-head); font-size: 1.2rem; font-weight: 700;
+    flex: 1;
+  }
+  .search-wrap {
+    flex: 1; max-width: 320px;
+    position: relative;
+  }
+  .search-wrap input {
+    width: 100%; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 99px; padding: 9px 16px 9px 40px;
+    color: var(--text); font-family: var(--font); font-size: 0.88rem;
+    outline: none; transition: border 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-wrap input::placeholder { color: var(--text3); }
+  .search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--text3); font-size: 0.9rem; pointer-events: none;
+  }
+  .search-results {
+    position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow); z-index: 100; display: none;
+  }
+  .search-results.show { display: block; }
+  .search-result-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; cursor: pointer; transition: background 0.15s;
+  }
+  .search-result-item:hover { background: var(--bg3); }
+  .sr-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.78rem; color: #fff; flex-shrink: 0;
+  }
+  .sr-name { font-size: 0.88rem; font-weight: 500; }
+  .sr-handle { font-size: 0.75rem; color: var(--text2); }
+
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--bg2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem; transition: all 0.2s;
+    color: var(--text2); flex-shrink: 0;
+  }
+  .icon-btn:hover { background: var(--bg3); color: var(--text); }
+
+  /* ─── PAGES ─── */
+  .page { display: none; flex: 1; overflow-y: auto; padding: 24px; }
+  .page.active { display: block; }
+
+  /* ─── FEED ─── */
+  .feed-wrap { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+  /* STORIES */
+  .stories-row {
+    display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .stories-row::-webkit-scrollbar { display: none; }
+  .story-item { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; cursor: pointer; }
+  .story-ring {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--story1), var(--story2));
+    padding: 2.5px;
+    transition: transform 0.2s;
+  }
+  .story-ring:hover { transform: scale(1.06); }
+  .story-ring.seen { background: var(--bg3); }
+  .story-inner {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: var(--bg2);
+    border: 2.5px solid var(--bg);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .story-inner img { width: 100%; height: 100%; object-fit: cover; }
+  .story-add-btn {
+    width: 55px; height: 55px; border-radius: 50%;
+    background: var(--bg3); border: 2px dashed var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; cursor: pointer; color: var(--text3);
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .story-add-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .story-name { font-size: 0.7rem; color: var(--text2); max-width: 60px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* COMPOSE */
+  .compose-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .compose-row { display: flex; align-items: flex-start; gap: 12px; }
+  .compose-avatar {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: #fff; overflow: hidden;
+  }
+  .compose-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .compose-input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--text); font-family: var(--font); font-size: 0.95rem;
+    resize: none; min-height: 60px; padding-top: 6px;
+    line-height: 1.5;
+  }
+  .compose-input::placeholder { color: var(--text3); }
+  .compose-preview { position: relative; }
+  .compose-preview img {
+    width: 100%; max-height: 280px; object-fit: cover;
+    border-radius: var(--radius-sm);
+  }
+  .compose-preview-remove {
+    position: absolute; top: 8px; right: 8px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(0,0,0,0.7); border: none;
+    color: #fff; cursor: pointer; font-size: 0.8rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .compose-preview-remove:hover { background: rgba(255,60,60,0.8); }
+  .compose-actions { display: flex; align-items: center; gap: 8px; padding-top: 4px; border-top: 1px solid var(--border); }
+  .compose-btn {
+    background: none; border: none; cursor: pointer; color: var(--text3);
+    font-size: 1.1rem; padding: 6px 8px; border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .compose-btn:hover { background: var(--bg3); color: var(--accent); }
+  .compose-submit {
+    margin-left: auto;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none; border-radius: 99px; padding: 9px 22px;
+    color: #fff; font-family: var(--font-head); font-weight: 700;
+    font-size: 0.88rem; cursor: pointer; transition: opacity 0.2s, transform 0.1s;
+  }
+  .compose-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* TRENDING */
+  .trending-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .trending-title { font-family: var(--font-head); font-weight: 700; font-size: 1rem; margin-bottom: 10px; }
+  .trending-tag {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 12px; border-radius: var(--radius-sm);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .trending-tag:hover { background: var(--bg3); }
+  .tag-name { color: var(--accent); font-weight: 600; font-size: 0.93rem; }
+  .tag-count { font-size: 0.78rem; color: var(--text3); }
+
+  /* POST CARD */
+  .post-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    animation: fadeUp 0.35s ease;
+  }
+  .post-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px 10px;
+  }
+  .post-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: #fff; font-size: 0.9rem; flex-shrink: 0;
+    overflow: hidden;
+  }
+  .post-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .post-name { font-weight: 600; font-size: 0.92rem; }
+  .post-handle { font-size: 0.78rem; color: var(--text2); }
+  .post-time { margin-left: auto; font-size: 0.75rem; color: var(--text3); }
+  .post-options {
+    margin-left: 8px; cursor: pointer; color: var(--text3);
+    font-size: 1.1rem; padding: 4px;
+    transition: color 0.2s;
+  }
+  .post-options:hover { color: var(--text); }
+  .post-body { padding: 2px 16px 12px; font-size: 0.92rem; line-height: 1.6; }
+  .post-body .hashtag { color: var(--accent); cursor: pointer; }
+  .post-body .hashtag:hover { text-decoration: underline; }
+  .post-img { width: 100%; max-height: 360px; object-fit: cover; display: block; }
+  .post-actions {
+    display: flex; gap: 4px; padding: 10px 12px;
+    border-top: 1px solid var(--border);
+  }
+  .post-action {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 12px; border-radius: var(--radius-sm);
+    cursor: pointer; color: var(--text2 #555577); font-size: 0.85rem;
+    transition: all 0.2s; border: none; background: none;
+    font-family: var(--font);
+  }
+  .post-action:hover { background: var(--bg3); color: var(--text); }
+  .post-action.liked { color: #fc4c6c; }
+  .post-action.liked .action-icon { animation: heartPop 0.3s ease; }
+  .post-action span { font-size: 1.05rem; }
+  .post-action.share-btn:hover { color: var(--accent3); }
+  .post-action.save-btn:hover { color: var(--accent); }
+
+  /* ─── RIGHT PANEL ─── */
+  #right-panel {
+    width: 300px; min-width: 300px;
+    border-left: 1px solid var(--border);
+    background: var(--bg2);
+    overflow-y: auto; padding: 24px 16px;
+    display: flex; flex-direction: column; gap: 20px;
+    transition: background 0.3s;
+  }
+  .panel-section-title {
+    font-family: var(--font-head); font-weight: 700; font-size: 0.95rem;
+    margin-bottom: 12px; color: var(--text);
+  }
+  .suggest-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px;
+  }
+  .suggest-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .suggest-item:last-child { border-bottom: none; }
+  .suggest-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent3), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.82rem; color: #fff; flex-shrink: 0;
+  }
+  .suggest-name { font-size: 0.85rem; font-weight: 600; }
+  .suggest-handle { font-size: 0.73rem; color: var(--text2); }
+  .follow-btn {
+    margin-left: auto; background: none;
+    border: 1px solid var(--accent); border-radius: 99px;
+    color: var(--accent); font-family: var(--font); font-size: 0.78rem;
+    font-weight: 600; padding: 5px 14px; cursor: pointer;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .follow-btn:hover, .follow-btn.following { background: var(--accent); color: #fff; }
+  .trending-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px;
+  }
+  .trending-item {
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .trending-item:last-child { border-bottom: none; }
+  .trend-cat { font-size: 0.72rem; color: var(--text3); }
+  .trend-hash { font-weight: 600; color: var(--accent); font-size: 0.9rem; }
+  .trend-num { font-size: 0.75rem; color: var(--text3); margin-top: 2px; }
+
+  /* ─── PROFILE PAGE ─── */
+  .profile-banner {
+    height: 180px; border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+    position: relative; margin-bottom: 60px;
+    overflow: hidden;
+  }
+  .profile-avatar-large {
+    position: absolute; bottom: -50px; left: 24px;
+    width: 96px; height: 96px; border-radius: 50%;
+    border: 4px solid var(--bg);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head); font-size: 2rem; font-weight: 800;
+    color: #fff; overflow: hidden;
+  }
+  .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-edit-btn {
+    position: absolute; bottom: -42px; right: 24px;
+    background: none; border: 1px solid var(--border);
+    border-radius: 99px; padding: 8px 20px;
+    color: var(--text); font-family: var(--font); font-size: 0.85rem;
+    font-weight: 600; cursor: pointer; transition: all 0.2s;
+    background: var(--card);
+  }
+  .profile-edit-btn:hover { background: var(--bg3); }
+  .profile-info { max-width: 600px; margin: 0 auto; }
+  .profile-name { font-family: var(--font-head); font-size: 1.5rem; font-weight: 800; margin-bottom: 2px; }
+  .profile-handle { color: var(--text2); margin-bottom: 10px; font-size: 0.9rem; }
+  .profile-bio { font-size: 0.93rem; line-height: 1.6; color: var(--text2); margin-bottom: 16px; }
+  .profile-stats { display: flex; gap: 28px; margin-bottom: 20px; }
+  .profile-stat { text-align: center; }
+  .stat-num { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; }
+  .stat-label { font-size: 0.75rem; color: var(--text3); }
+  .profile-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .profile-tab {
+    padding: 10px 20px; cursor: pointer; font-weight: 500; font-size: 0.9rem;
+    color: var(--text2); border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .profile-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .profile-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+    border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .profile-grid-item {
+    aspect-ratio: 1; background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; cursor: pointer; overflow: hidden;
+    transition: opacity 0.2s;
+  }
+  .profile-grid-item:hover { opacity: 0.8; }
+  .profile-grid-item img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ─── EDIT PROFILE MODAL ─── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 24px; width: 480px; max-width: 96vw;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: var(--shadow); animation: fadeUp 0.3s ease;
+  }
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--card); z-index: 1;
+  }
+  .modal-title { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; }
+  .modal-close {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg3); border: none;
+    cursor: pointer; font-size: 1rem; color: var(--text);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--bg2); }
+  .modal-body { padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 0.82rem; font-weight: 600; color: var(--text2); }
+  .form-input {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 11px 14px;
+    color: var(--text); font-family: var(--font); font-size: 0.9rem;
+    outline: none; transition: border 0.2s;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-textarea {
+    resize: vertical; min-height: 90px; line-height: 1.5;
+  }
+  .avatar-edit-wrap { display: flex; align-items: center; gap: 16px; margin-bottom: 4px; }
+  .avatar-edit-preview {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
+    color: #fff; overflow: hidden; flex-shrink: 0;
+  }
+  .avatar-edit-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .avatar-upload-btn {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 9px 18px;
+    color: var(--text); font-family: var(--font); font-size: 0.87rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .avatar-upload-btn:hover { background: var(--bg2); }
+  .modal-footer {
+    padding: 16px 24px; border-top: 1px solid var(--border);
+    display: flex; justify-content: flex-end; gap: 10px;
+  }
+  .btn-secondary {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 9px 20px;
+    color: var(--text); font-family: var(--font); font-size: 0.9rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--bg2); }
+
+  /* ─── DM PAGE ─── */
+  .dm-layout { display: flex; gap: 0; height: calc(100vh - 65px); }
+  .dm-list {
+    width: 300px; min-width: 300px; border-right: 1px solid var(--border);
+    overflow-y: auto; display: flex; flex-direction: column;
+  }
+  .dm-list-header {
+    padding: 16px; border-bottom: 1px solid var(--border);
+    font-family: var(--font-head); font-weight: 700; font-size: 1rem;
+  }
+  .dm-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px; cursor: pointer; transition: background 0.15s;
+    border-bottom: 1px solid var(--border);
+  }
+  .dm-item:hover, .dm-item.active { background: var(--bg3); }
+  .dm-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent3));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: #fff; flex-shrink: 0; font-size: 0.9rem;
+  }
+  .dm-name { font-weight: 600; font-size: 0.9rem; }
+  .dm-preview { font-size: 0.78rem; color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px; }
+  .dm-time { margin-left: auto; font-size: 0.72rem; color: var(--text3); }
+  .dm-unread-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .dm-chat { flex: 1; display: flex; flex-direction: column; }
+  .dm-chat-header {
+    padding: 14px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 600;
+  }
+  .dm-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .dm-msg { display: flex; gap: 10px; max-width: 80%; }
+  .dm-msg.mine { align-self: flex-end; flex-direction: row-reverse; }
+  .dm-msg-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent3));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: #fff; font-size: 0.75rem; flex-shrink: 0;
+    align-self: flex-end;
+  }
+  .dm-bubble {
+    padding: 10px 14px; border-radius: 18px;
+    font-size: 0.9rem; line-height: 1.5;
+    background: var(--bg3); color: var(--text);
+    border-radius: 18px 18px 18px 4px;
+  }
+  .dm-msg.mine .dm-bubble {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border-radius: 18px 18px 4px 18px;
+  }
+  .dm-compose {
+    padding: 14px 20px; border-top: 1px solid var(--border);
+    display: flex; gap: 10px; align-items: center;
+  }
+  .dm-input {
+    flex: 1; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 99px; padding: 10px 18px;
+    color: var(--text); font-family: var(--font); font-size: 0.9rem;
+    outline: none; transition: border 0.2s;
+  }
+  .dm-input:focus { border-color: var(--accent); }
+  .dm-send {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none; color: #fff; cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .dm-send:hover { opacity: 0.85; transform: scale(1.05); }
+
+  /* ─── SETTINGS PAGE ─── */
+  .settings-wrap { max-width: 560px; margin: 0 auto; }
+  .settings-section {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; margin-bottom: 20px;
+  }
+  .settings-section-title {
+    padding: 14px 20px; border-bottom: 1px solid var(--border);
+    font-family: var(--font-head); font-weight: 700; font-size: 0.95rem;
+    color: var(--text2);
+  }
+  .settings-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 15px 20px; border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .settings-item:last-child { border-bottom: none; }
+  .settings-item:hover { background: var(--bg3); }
+  .settings-item-label { font-size: 0.92rem; font-weight: 500; }
+  .settings-item-sub { font-size: 0.78rem; color: var(--text3); margin-top: 2px; }
+  .toggle {
+    width: 46px; height: 26px; border-radius: 99px;
+    background: var(--bg3); border: 2px solid var(--border);
+    cursor: pointer; position: relative; transition: background 0.25s;
+    flex-shrink: 0;
+  }
+  .toggle.on { background: var(--accent); border-color: var(--accent); }
+  .toggle::after {
+    content: ''; position: absolute;
+    top: 2px; left: 2px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; transition: transform 0.25s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+  .toggle.on::after { transform: translateX(20px); }
+  .settings-arrow { color: var(--text3); font-size: 0.9rem; }
+  .logout-btn {
+    width: 100%; background: none; border: 1px solid var(--danger);
+    border-radius: var(--radius-sm); padding: 13px;
+    color: var(--danger); font-family: var(--font-head); font-weight: 700;
+    font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .logout-btn:hover { background: var(--danger); color: #fff; }
+
+  /* ─── STORY VIEWER ─── */
+  .story-viewer {
+    position: fixed; inset: 0; z-index: 800;
+    background: rgba(0,0,0,0.95);
+    display: none; align-items: center; justify-content: center;
+  }
+  .story-viewer.show { display: flex; }
+  .story-view-box {
+    width: 380px; max-width: 96vw; max-height: 90vh;
+    position: relative; border-radius: 20px; overflow: hidden;
+  }
+  .story-progress {
+    position: absolute; top: 12px; left: 12px; right: 12px;
+    display: flex; gap: 4px; z-index: 1;
+  }
+  .story-prog-bar {
+    flex: 1; height: 3px; background: rgba(255,255,255,0.3);
+    border-radius: 99px; overflow: hidden;
+  }
+  .story-prog-fill {
+    height: 100%; background: #fff; width: 0;
+    transition: width 0.1s linear;
+  }
+  .story-content {
+    width: 100%; aspect-ratio: 9/16; max-height: 80vh;
+    background: linear-gradient(160deg, var(--accent) 0%, var(--accent2) 100%);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; font-size: 3rem; color: #fff;
+    position: relative;
+  }
+  .story-user-tag {
+    position: absolute; top: 40px; left: 12px;
+    display: flex; align-items: center; gap: 8px;
+    color: #fff; font-weight: 600; font-size: 0.9rem;
+  }
+  .story-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); border: none;
+    color: #fff; cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ─── TOAST ─── */
+  .toast-container {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 999; display: flex; flex-direction: column; gap: 8px;
+    pointer-events: none;
+  }
+  .toast {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 10px 20px;
+    font-size: 0.88rem; font-weight: 500;
+    box-shadow: var(--shadow); animation: toastIn 0.3s ease;
+    pointer-events: none; white-space: nowrap;
+  }
+  .toast.success { border-color: var(--success); color: var(--success); }
+  .toast.info { border-color: var(--accent); color: var(--accent); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heartPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+  }
+
+  /* ─── EXPLORE PAGE ─── */
+  .explore-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .explore-item {
+    aspect-ratio: 1; background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem; cursor: pointer; overflow: hidden;
+    transition: opacity 0.2s; position: relative;
+  }
+  .explore-item:hover .explore-overlay { opacity: 1; }
+  .explore-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 0.85rem; font-weight: 600;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .explore-item img { width: 100%; height: 100%; object-fit: cover; }
+  .explore-section-title {
+    font-family: var(--font-head); font-weight: 700; font-size: 1.1rem;
+    margin: 0 0 14px;
+  }
+  .explore-hash-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;
+  }
+  .explore-hash {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px 16px; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .explore-hash:hover { background: var(--bg3); }
+  .explore-hash-name { color: var(--accent); font-weight: 700; font-size: 1rem; }
+  .explore-hash-count { font-size: 0.78rem; color: var(--text3); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">Pulse</div>
+    <div class="auth-sub">Connect. Share. Vibe.</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" onclick="switchAuth('login')">Login</div>
+      <div class="auth-tab" onclick="switchAuth('register')">Sign up</div>
+    </div>
+    <div class="auth-form" id="auth-form">
+      <input type="text" id="auth-name" placeholder="Full name" style="display:none">
+      <input type="text" id="auth-username" placeholder="Username" autocomplete="off">
+      <input type="password" id="auth-password" placeholder="Password">
+      <button class="btn-primary" onclick="handleAuth()">Login →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">Pulse</div>
+  <div class="nav-item active" data-page="feed" onclick="navigate('feed',this)"><span class="icon">🏠</span> Home</div>
+  <div class="nav-item" data-page="explore" onclick="navigate('explore',this)"><span class="icon">🔍</span> Explore</div>
+  <div class="nav-item" data-page="dm" onclick="navigate('dm',this)"><span class="icon">💬</span> Messages <span class="nav-badge" id="dm-badge">3</span></div>
+  <div class="nav-item" onclick="openEditProfile()"><span class="icon">✏️</span> Edit Profile</div>
+  <div class="nav-item" data-page="profile" onclick="navigate('profile',this)"><span class="icon">👤</span> Profile</div>
+  <div class="nav-item" data-page="settings" onclick="navigate('settings',this)"><span class="icon">⚙️</span> Settings</div>
+  <div class="sidebar-spacer"></div>
+  <div class="sidebar-user" onclick="navigate('profile',document.querySelector('[data-page=profile]'))">
+    <div class="sidebar-avatar" id="sidebar-avatar">?</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" id="sidebar-uname">—</div>
+      <div class="sidebar-user-handle" id="sidebar-handle">@—</div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-title" id="page-title">Home</div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Search people & tags…" oninput="handleSearch(this.value)" onfocus="showSearch()" onblur="hideSearch()">
+      <div class="search-results" id="search-results"></div>
+    </div>
+    <div class="icon-btn" id="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">🌙</div>
+    <div class="icon-btn" onclick="openNotif()" title="Notifications">🔔</div>
+  </div>
+
+  <!-- FEED PAGE -->
+  <div class="page active" id="page-feed">
+    <div class="feed-wrap">
+      <!-- Stories -->
+      <div class="stories-row" id="stories-row"></div>
+
+      <!-- Compose -->
+      <div class="compose-box">
+        <div class="compose-row">
+          <div class="compose-avatar" id="compose-avatar">?</div>
+          <textarea class="compose-input" id="compose-input" placeholder="What's happening?" rows="3"></textarea>
+        </div>
+        <div id="compose-preview" class="compose-preview" style="display:none"></div>
+        <div class="compose-actions">
+          <label class="compose-btn" title="Add image" style="cursor:pointer">
+            📷 <input type="file" accept="image/*" style="display:none" onchange="previewCompose(this)">
+          </label>
+          <button class="compose-btn" title="Add emoji" onclick="addEmoji()">😊</button>
+          <button class="compose-btn" title="Add hashtag" onclick="addHashtag()">🏷️</button>
+          <button class="compose-submit" onclick="postTweet()">Post</button>
+        </div>
+      </div>
+
+      <!-- Posts -->
+      <div id="posts-container"></div>
+    </div>
+  </div>
+
+  <!-- EXPLORE PAGE -->
+  <div class="page" id="page-explore">
+    <div style="max-width:600px;margin:0 auto">
+      <p class="explore-section-title">Trending Topics</p>
+      <div class="explore-hash-grid" id="explore-hash-grid"></div>
+      <p class="explore-section-title">Discover</p>
+      <div class="explore-grid" id="explore-grid"></div>
+    </div>
+  </div>
+
+  <!-- DM PAGE -->
+  <div class="page" id="page-dm" style="padding:0">
+    <div class="dm-layout">
+      <div class="dm-list">
+        <div class="dm-list-header">Messages</div>
+        <div id="dm-list-items"></div>
+      </div>
+      <div class="dm-chat" id="dm-chat">
+        <div class="dm-chat-header" id="dm-chat-header">Select a conversation</div>
+        <div class="dm-messages" id="dm-messages"></div>
+        <div class="dm-compose">
+          <input class="dm-input" id="dm-input" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendDM()">
+          <button class="dm-send" onclick="sendDM()">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE PAGE -->
+  <div class="page" id="page-profile">
+    <div style="max-width:600px;margin:0 auto">
+      <div class="profile-banner" id="profile-banner">
+        <div class="profile-avatar-large" id="profile-avatar-large">?</div>
+        <button class="profile-edit-btn" onclick="openEditProfile()">✏️ Edit Profile</button>
+      </div>
+      <div class="profile-info">
+        <div class="profile-name" id="profile-name-display">—</div>
+        <div class="profile-handle" id="profile-handle-display">@—</div>
+        <div class="profile-bio" id="profile-bio-display">No bio yet.</div>
+        <div class="profile-stats">
+          <div class="profile-stat"><div class="stat-num" id="stat-posts">0</div><div class="stat-label">Posts</div></div>
+          <div class="profile-stat"><div class="stat-num">284</div><div class="stat-label">Following</div></div>
+          <div class="profile-stat"><div class="stat-num" id="stat-followers">1.2K</div><div class="stat-label">Followers</div></div>
+        </div>
+        <div class="profile-tabs">
+          <div class="profile-tab active">Posts</div>
+          <div class="profile-tab">Media</div>
+          <div class="profile-tab">Likes</div>
+        </div>
+        <div class="profile-grid" id="profile-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS PAGE -->
+  <div class="page" id="page-settings">
+    <div class="settings-wrap">
+      <div class="settings-section">
+        <div class="settings-section-title">Appearance</div>
+        <div class="settings-item">
+          <div><div class="settings-item-label">Dark Mode</div><div class="settings-item-sub">Toggle between light and dark</div></div>
+          <div class="toggle on" id="settings-dark-toggle" onclick="toggleTheme()"></div>
+        </div>
+        <div class="settings-item">
+          <div><div class="settings-item-label">Reduce Motion</div><div class="settings-item-sub">Less animations</div></div>
+          <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-title">Privacy</div>
+        <div class="settings-item">
+          <div><div class="settings-item-label">Private Account</div><div class="settings-item-sub">Only followers see your posts</div></div>
+          <div class="toggle" onclick="this.classList.toggle('on');showToast('Privacy updated','success')"></div>
+        </div>
+        <div class="settings-item">
+          <div><div class="settings-item-label">Hide Activity Status</div></div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="settings-item" onclick="">
+          <div><div class="settings-item-label">Blocked Users</div></div>
+          <span class="settings-arrow">›</span>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-title">Notifications</div>
+        <div class="settings-item">
+          <div><div class="settings-item-label">Push Notifications</div></div>
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="settings-item">
+          <div><div class="settings-item-label">Email Digest</div></div>
+          <div class="toggle" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-title">Account</div>
+        <div class="settings-item" onclick="openEditProfile()">
+          <div><div class="settings-item-label">Edit Profile</div></div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" onclick="showToast('Password reset email sent','success')">
+          <div><div class="settings-item-label">Change Password</div></div>
+          <span class="settings-arrow">›</span>
+        </div>
+        <div class="settings-item" style="color:var(--danger)">
+          <div><div class="settings-item-label" style="color:var(--danger)">Delete Account</div></div>
+          <span class="settings-arrow">›</span>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div id="right-panel">
+  <div>
+    <div class="panel-section-title">Trending</div>
+    <div class="trending-card" id="panel-trending"></div>
+  </div>
+  <div>
+    <div class="panel-section-title">Suggested</div>
+    <div class="suggest-card" id="panel-suggest"></div>
+  </div>
+</div>
+
+<!-- EDIT PROFILE MODAL -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">Edit Profile</div>
+      <button class="modal-close" onclick="closeEditProfile()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="avatar-edit-wrap">
+        <div class="avatar-edit-preview" id="avatar-edit-preview">?</div>
+        <label>
+          <div class="avatar-upload-btn">📷 Change Photo</div>
+          <input type="file" accept="image/*" style="display:none" onchange="updateAvatar(this)">
+        </label>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Display Name</div>
+        <input class="form-input" id="edit-name" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <div class="form-label">Username</div>
+        <input class="form-input" id="edit-username" placeholder="@username">
+      </div>
+      <div class="form-group">
+        <div class="form-label">Bio</div>
+        <textarea class="form-input form-textarea" id="edit-bio" placeholder="Tell the world about yourself…"></textarea>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Website</div>
+        <input class="form-input" id="edit-website" placeholder="https://yoursite.com">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeEditProfile()">Cancel</button>
+      <button class="btn-primary" style="padding:9px 24px;font-size:0.9rem" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- STORY VIEWER -->
+<div class="story-viewer" id="story-viewer" onclick="closeStory(event)">
+  <div class="story-view-box" id="story-view-box">
+    <div class="story-progress" id="story-progress"></div>
+    <div class="story-content" id="story-content">
+      <div class="story-user-tag" id="story-user-tag"></div>
+      <button class="story-close" onclick="closeStory({target:document.getElementById('story-viewer')})">✕</button>
+      <div id="story-emoji" style="font-size:4rem;margin-bottom:16px"></div>
+      <div id="story-caption" style="font-size:1.1rem;font-weight:600;color:#fff;padding:0 30px;text-align:center"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toast-container"></div>
+
+<script>
+/* ═══════════════ STATE ═══════════════ */
+let state = {
+  user: null,
+  theme: 'dark',
+  posts: [],
+  dmChats: {},
+  activeDM: null,
+  avatarData: null,
+  bio: '',
+  website: '',
+  storyInterval: null,
+};
+
+const users = [
+  { name:'Alex Rivera', handle:'alexr', init:'A', color:'135deg, #7c6cfc, #fc6cf0' },
+  { name:'Mia Chen', handle:'mia_c', init:'M', color:'135deg, #6cfcd8, #7c6cfc' },
+  { name:'Jordan Lake', handle:'jlake', init:'J', color:'135deg, #fc6cf0, #fcbc6c' },
+  { name:'Sam Patel', handle:'sampatel', init:'S', color:'135deg, #fcbc6c, #fc6c6c' },
+  { name:'Nia Brooks', handle:'nia_b', init:'N', color:'135deg, #6cfc8c, #6cfcd8' },
+];
+
+const samplePosts = [
+  { user: users[0], text: 'Just shipped a new feature 🚀 The dev grind never stops. #coding #buildingInPublic', time:'2m', likes:142, comments:18, img: null },
+  { user: users[1], text: 'Golden hour was absolutely stunning today 🌅 Nature always delivers. #photography #sunset', time:'15m', likes:389, comments:44, img: null, emoji:'🌅' },
+  { user: users[2], text: 'Hot take: Dark mode is not just a preference, it\'s a lifestyle. Who agrees? #darkmode #devlife', time:'1h', likes:521, comments:67, img: null },
+  { user: users[3], text: 'Coffee ☕ + keyboard + lo-fi = perfect Sunday. What\'s your productive playlist? #lofi #chill #weekend', time:'3h', likes:208, comments:31, img: null },
+  { user: users[4], text: 'Reminder: You don\'t need to post every day. Quality over quantity. Rest, reflect, create. 🌿 #mentalhealth #creator', time:'5h', likes:764, comments:92, img: null },
+];
+
+const trends = [
+  { cat:'Technology', hash:'#AIRevolution', count:'124K posts' },
+  { cat:'Design', hash:'#UITrends2025', count:'89K posts' },
+  { cat:'Dev', hash:'#OpenSource', count:'67K posts' },
+  { cat:'Photography', hash:'#GoldenHour', count:'201K posts' },
+  { cat:'Lifestyle', hash:'#MindfulLiving', count:'55K posts' },
+];
+
+const dmData = {
+  alexr: { name:'Alex Rivera', init:'A', msgs:[
+    {mine:false, text:'Hey! Loved your latest post 🔥'},
+    {mine:true, text:'Thanks! Working on something even bigger'},
+    {mine:false, text:'Can\'t wait to see it!'},
+  ]},
+  mia_c: { name:'Mia Chen', init:'M', msgs:[
+    {mine:false, text:'Are you going to the design meetup?'},
+    {mine:true, text:'Yes! See you there 👋'},
+  ]},
+  jlake: { name:'Jordan Lake', init:'J', msgs:[
+    {mine:false, text:'Check out this cool library I found'},
+    {mine:false, text:'github.com/coolproject 😍'},
+    {mine:true, text:'Bookmarked, thank you!'},
+  ]},
+};
+
+/* ═══════════════ AUTH ═══════════════ */
+let authMode = 'login';
+
+function switchAuth(mode) {
+  authMode = mode;
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>{
+    t.classList.toggle('active', (mode==='login'&&i===0)||(mode==='register'&&i===1));
+  });
+  document.getElementById('auth-name').style.display = mode==='register' ? '' : 'none';
+  document.querySelector('#auth-form .btn-primary').textContent = mode==='login' ? 'Login →' : 'Create Account →';
+}
+
+function handleAuth() {
+  const username = document.getElementById('auth-username').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const name = authMode==='register' ? document.getElementById('auth-name').value.trim() : '';
+  if(!username||!password) { showToast('Please fill in all fields','info'); return; }
+  if(authMode==='register'&&!name) { showToast('Enter your name','info'); return; }
+  state.user = {
+    name: authMode==='register' ? name : (username.charAt(0).toUpperCase()+username.slice(1)),
+    handle: username,
+    init: (authMode==='register' ? name : username).charAt(0).toUpperCase(),
+  };
+  document.getElementById('auth-screen').style.display = 'none';
+  initApp();
+  showToast('Welcome, ${state.user.name}! 👋', 'success');
+}
+
+function logout() {
+  if(!confirm('Sign out?')) return;
+  state.user = null;
+  document.getElementById('auth-screen').style.display = '';
+  document.getElementById('auth-username').value = '';
+  document.getElementById('auth-password').value = '';
+  showToast('Signed out successfully','info');
+}
+
+/* ═══════════════ INIT ═══════════════ */
+function initApp() {
+  updateUserUI();
+  renderStories();
+  renderPosts();
+  renderRightPanel();
+  renderExplore();
+  renderDMList();
+  renderProfilePage();
+}
+
+function updateUserUI() {
+  const u = state.user;
+  const initEl = (id, val) => { const e = document.getElementById(id); if(e) e.innerHTML = val; };
+  const initText = (id, val) => { const e = document.getElementById(id); if(e) e.textContent = val; };
+
+  const avatarHTML = state.avatarData
+    ? <img src="${state.avatarData}" alt="">
+    : u.init;
+
+  initEl('sidebar-avatar', avatarHTML);
+  initEl('compose-avatar', avatarHTML);
+  initEl('avatar-edit-preview', avatarHTML);
+  initEl('profile-avatar-large', avatarHTML);
+  initText('sidebar-uname', u.name);
+  initText('sidebar-handle', '@'+u.handle);
+  initText('profile-name-display', u.name);
+  initText('profile-handle-display', '@'+u.handle);
+  initText('profile-bio-display', state.bio || 'No bio yet.');
+
+  document.getElementById('edit-name').value = u.name;
+  document.getElementById('edit-username').value = u.handle;
+  document.getElementById('edit-bio').value = state.bio;
+  document.getElementById('edit-website').value = state.website;
+}
+
+/* ═══════════════ STORIES ═══════════════ */
+function renderStories() {
+  const row = document.getElementById('stories-row');
+  const storyData = [
+    { user:state.user, emoji:'➕', add:true },
+    ...users.map((u,i)=>({ user:u, emoji:['🌅','🎮','☕','🎨','🏃'][i], seen: i>2 }))
+  ];
+  row.innerHTML = storyData.map((s,i) => `
+    <div class="story-item" onclick="${s.add ? 'addStory()' : viewStory(${i-1})}">
+      ${s.add
+        ? <div class="story-add-btn">➕</div><div class="story-name">Add Story</div>
+        : `<div class="story-ring ${s.seen?'seen':''}">
+            <div class="story-inner">${s.emoji}</div>
+           </div>
+           <div class="story-name">${s.user.name.split(' ')[0]}</div>`
+      }
+    </div>
+  `).join('');
+}
+
+function addStory() {
+  const el = document.createElement('input');
+  el.type = 'file'; el.accept = 'image/*';
+  el.onchange = () => showToast('Story uploaded! 🌟','success');
+  el.click();
+}
+
+function viewStory(idx) {
+  const u = users[idx];
+  const stories = ['🌅','🎮','☕','🎨','🏃'];
+  const captions = ['Golden hour vibes ✨','Gaming mode: ON 🎮','Morning ritual ☕','Creating something new 🎨','Run done! 💪'];
+  document.getElementById('story-emoji').textContent = stories[idx];
+  document.getElementById('story-caption').textContent = captions[idx];
+  document.getElementById('story-user-tag').innerHTML = `
+    <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(${u.color});display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;color:#fff">${u.init}</div>
+    <span>${u.name}</span>`;
+  // progress bars
+  const prog = document.getElementById('story-progress');
+  prog.innerHTML = Array(5).fill(0).map((_,i)=><div class="story-prog-bar"><div class="story-prog-fill" id="spf-${i}"></div></div>).join('');
+  for(let i=0;i<idx;i++) document.getElementById(spf-${i}).style.width='100%';
+
+  document.getElementById('story-viewer').classList.add('show');
+  let pct = 0;
+  clearInterval(state.storyInterval);
+  state.storyInterval = setInterval(()=>{
+    pct += 2;
+    const el = document.getElementById(spf-${idx});
+    if(el) el.style.width = Math.min(pct,100)+'%';
+    if(pct>=100) { clearInterval(state.storyInterval); setTimeout(closeStory,400,{target:document.getElementById('story-viewer')}); }
+  },100);
+}
+
+function closeStory(e) {
+  if(e.target===document.getElementById('story-viewer')||e.target===document.querySelector('.story-close')) {
+    document.getElementById('story-viewer').classList.remove('show');
+    clearInterval(state.storyInterval);
+  }
+}
+
+/* ═══════════════ POSTS ═══════════════ */
+function renderPosts() {
+  const container = document.getElementById('posts-container');
+  state.posts = samplePosts.map((p,i)=>({...p, id:i, liked:false, saved:false, likeCount:p.likes}));
+  container.innerHTML = state.posts.map(renderPost).join('');
+  updateStatPosts();
+}
+
+function renderPost(p) {
+  const text = p.text.replace(/#(\w+)/g,'<span class="hashtag">#$1</span>');
+  return `
+  <div class="post-card" id="post-${p.id}">
+    <div class="post-header">
+      <div class="post-avatar" style="background:linear-gradient(${p.user.color})">${p.user.init}</div>
+      <div>
+        <div class="post-name">${p.user.name}</div>
+        <div class="post-handle">@${p.user.handle}</div>
+      </div>
+      <div class="post-time">${p.time}</div>
+      <div class="post-options" onclick="postMenu(${p.id})">⋯</div>
+    </div>
+    <div class="post-body">${text}</div>
+    ${p.emoji ? <div style="font-size:5rem;text-align:center;padding:20px 0;background:var(--bg3)">${p.emoji}</div> : ''}
+    ${p.imageData ? <img class="post-img" src="${p.imageData}" alt=""> : ''}
+    <div class="post-actions">
+      <button class="post-action ${p.liked?'liked':''}" id="like-${p.id}" onclick="toggleLike(${p.id})">
+        <span>${p.liked?'❤️':'🤍'}</span> <span id="like-count-${p.id}">${p.likeCount}</span>
+      </button>
+      <button class="post-action" onclick="showToast('Comments coming soon!','info')">
+        <span>💬</span> ${p.comments}
+      </button>
+      <button class="post-action share-btn" onclick="showToast('Link copied! 🔗','success')">
+        <span>↗️</span>
+      </button>
+      <button class="post-action save-btn ${p.saved?'saved':''}" id="save-${p.id}" onclick="toggleSave(${p.id})">
+        <span>${p.saved?'🔖':'🏷️'}</span>
+      </button>
+    </div>
+  </div>`;
+}
+
+function toggleLike(id) {
+  const p = state.posts.find(x=>x.id===id);
+  if(!p) return;
+  p.liked = !p.liked;
+  p.likeCount += p.liked ? 1 : -1;
+  document.getElementById(like-${id}).className = post-action ${p.liked?'liked':''};
+  document.getElementById(like-${id}).querySelector('span').textContent = p.liked?'❤️':'🤍';
+  document.getElementById(like-count-${id}).textContent = p.likeCount;
+}
+
+function toggleSave(id) {
+  const p = state.posts.find(x=>x.id===id);
+  if(!p) return;
+  p.saved = !p.saved;
+  document.getElementById(save-${id}).querySelector('span').textContent = p.saved?'🔖':'🏷️';
+  showToast(p.saved?'Post saved 🔖':'Post unsaved','info');
+}
+
+function postMenu(id) { showToast('More options coming soon','info'); }
+
+function postTweet() {
+  const text = document.getElementById('compose-input').value.trim();
+  const prevEl = document.getElementById('compose-preview');
+  const img = prevEl.querySelector('img');
+  if(!text && !img) { showToast('Write something first!','info'); return; }
+  const newPost = {
+    id: Date.now(), user: { name: state.user.name, handle: state.user.handle, init: state.user.init, color: '135deg, #7c6cfc, #fc6cf0' },
+    text, time:'just now', likes:0, likeCount:0, comments:0, liked:false, saved:false,
+    imageData: img ? img.src : null,
+  };
+  state.posts.unshift(newPost);
+  document.getElementById('posts-container').innerHTML = renderPost(newPost) + document.getElementById('posts-container').innerHTML;
+  document.getElementById('compose-input').value = '';
+  prevEl.style.display = 'none'; prevEl.innerHTML = '';
+  updateStatPosts();
+  showToast('Posted! 🚀','success');
+}
+
+function previewCompose(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById('compose-preview');
+    prev.style.display = '';
+    prev.innerHTML = <img src="${e.target.result}" alt=""><button class="compose-preview-remove" onclick="removeComposePrev()">✕</button>;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeComposePrev() {
+  const prev = document.getElementById('compose-preview');
+  prev.style.display='none'; prev.innerHTML='';
+}
+
+function addEmoji() {
+  const emojis = ['😂','🔥','💯','✨','🎉','👏','😍','🤔','💪','🌟'];
+  document.getElementById('compose-input').value += ' ' + emojis[Math.floor(Math.random()*emojis.length)];
+}
+
+function addHashtag() {
+  const tags = ['#trending','#viral','#pulse','#today','#thoughts'];
+  document.getElementById('compose-input').value += ' ' + tags[Math.floor(Math.random()*tags.length)];
+}
+
+function updateStatPosts() {
+  document.getElementById('stat-posts').textContent = state.posts.length;
+}
+
+/* ═══════════════ RIGHT PANEL ═══════════════ */
+function renderRightPanel() {
+  document.getElementById('panel-trending').innerHTML = trends.slice(0,4).map(t=>`
+    <div class="trending-item" onclick="showToast('Exploring ${t.hash}','info')">
+      <div class="trend-cat">${t.cat}</div>
+      <div class="trend-hash">${t.hash}</div>
+      <div class="trend-num">${t.count}</div>
+    </div>`).join('');
+
+  document.getElementById('panel-suggest').innerHTML = users.slice(0,4).map(u=>`
+    <div class="suggest-item">
+      <div class="suggest-avatar" style="background:linear-gradient(${u.color})">${u.init}</div>
+      <div>
+        <div class="suggest-name">${u.name}</div>
+        <div class="suggest-handle">@${u.handle}</div>
+      </div>
+      <button class="follow-btn" onclick="toggleFollow(this)"">Follow</button>
+    </div>`).join('');
+}
+
+function toggleFollow(btn) {
+  const following = btn.classList.toggle('following');
+  btn.textContent = following ? 'Following' : 'Follow';
+  showToast(following ? 'Following! 👥' : 'Unfollowed', 'info');
+}
+
+/* ═══════════════ EXPLORE ═══════════════ */
+function renderExplore() {
+  document.getElementById('explore-hash-grid').innerHTML = trends.map(t=>`
+    <div class="explore-hash" onclick="showToast('Exploring ${t.hash}','info')">
+      <div class="explore-hash-name">${t.hash}</div>
+      <div class="explore-hash-count">${t.count}</div>
+    </div>`).join('');
+
+  const emojis = ['🌅','🎮','☕','🎨','🏃','🌿','🎵','🏙️','🐶','🌊','🍕','🚀'];
+  document.getElementById('explore-grid').innerHTML = emojis.map(e=>`
+    <div class="explore-item" onclick="showToast('Opening post…','info')">
+      <div style="font-size:2.5rem">${e}</div>
+      <div class="explore-overlay">View</div>
+    </div>`).join('');
+}
+
+/* ═══════════════ DM ═══════════════ */
+function renderDMList() {
+  document.getElementById('dm-list-items').innerHTML = Object.entries(dmData).map(([handle,chat])=>`
+    <div class="dm-item" onclick="openDM('${handle}')">
+      <div class="dm-avatar">${chat.init}</div>
+      <div style="flex:1;min-width:0">
+        <div class="dm-name">${chat.name}</div>
+        <div class="dm-preview">${chat.msgs.at(-1).text}</div>
+      </div>
+      <div class="dm-time">now</div>
+      <div class="dm-unread-dot"></div>
+    </div>`).join('');
+}
+
+function openDM(handle) {
+  state.activeDM = handle;
+  document.getElementById('dm-badge').style.display='none';
+  document.querySelectorAll('.dm-item').forEach((el,i)=>{
+    el.classList.toggle('active', Object.keys(dmData)[i]===handle);
+    el.querySelector('.dm-unread-dot')?.remove();
+  });
+  const chat = dmData[handle];
+  document.getElementById('dm-chat-header').innerHTML = `
+    <div class="dm-avatar" style="width:36px;height:36px">${chat.init}</div>
+    <div>
+      <div>${chat.name}</div>
+      <div style="font-size:0.75rem;color:var(--success);font-weight:400">● Online</div>
+    </div>`;
+  renderMessages(handle);
+}
+
+function renderMessages(handle) {
+  const chat = dmData[handle];
+  document.getElementById('dm-messages').innerHTML = chat.msgs.map(m=>`
+    <div class="dm-msg ${m.mine?'mine':''}">
+      ${!m.mine?<div class="dm-msg-avatar">${chat.init}</div>:''}
+      <div class="dm-bubble">${m.text}</div>
+    </div>`).join('');
+  const msgs = document.getElementById('dm-messages');
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendDM() {
+  const input = document.getElementById('dm-input');
+  const text = input.value.trim();
+  if(!text||!state.activeDM) return;
+  dmData[state.activeDM].msgs.push({mine:true, text});
+  renderMessages(state.activeDM);
+  input.value = '';
+  // simulate reply
+  setTimeout(()=>{
+    const replies = ["That's awesome! 🔥","Totally agree!","Can't wait! 🙌","Haha exactly!","Tell me more 👀","Love that! ✨"];
+    dmData[state.activeDM].msgs.push({mine:false, text: replies[Math.floor(Math.random()*replies.length)]});
+    renderMessages(state.activeDM);
+  }, 1200);
+}
+
+/* ═══════════════ PROFILE ═══════════════ */
+function renderProfilePage() {
+  const emojis = ['🌅','🎮','☕','🎨','🏃','🌿'];
+  document.getElementById('profile-grid').innerHTML = emojis.map(e=>`
+    <div class="profile-grid-item">${e}</div>`).join('');
+}
+
+/* ═══════════════ EDIT PROFILE ═══════════════ */
+function openEditProfile() {
+  document.getElementById('edit-name').value = state.user.name;
+  document.getElementById('edit-username').value = state.user.handle;
+  document.getElementById('edit-bio').value = state.bio;
+  document.getElementById('edit-website').value = state.website;
+  document.getElementById('edit-modal').classList.add('show');
+}
+
+function closeEditProfile() {
+  document.getElementById('edit-modal').classList.remove('show');
+}
+
+function saveProfile() {
+  const name = document.getElementById('edit-name').value.trim();
+  const handle = document.getElementById('edit-username').value.trim();
+  const bio = document.getElementById('edit-bio').value.trim();
+  const website = document.getElementById('edit-website').value.trim();
+  if(!name||!handle) { showToast('Name and username required','info'); return; }
+  state.user.name = name;
+  state.user.handle = handle;
+  state.user.init = name.charAt(0).toUpperCase();
+  state.bio = bio;
+  state.website = website;
+  updateUserUI();
+  closeEditProfile();
+  showToast('Profile updated! ✅','success');
+}
+
+function updateAvatar(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    state.avatarData = e.target.result;
+    updateUserUI();
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ═══════════════ NAVIGATION ═══════════════ */
+const pageTitles = { feed:'Home', explore:'Explore', dm:'Messages', profile:'Profile', settings:'Settings' };
+
+function navigate(page, el) {
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page)?.classList.add('active');
+  document.getElementById('page-title').textContent = pageTitles[page]||'';
+  document.getElementById('right-panel').style.display = page==='dm'||page==='settings' ? 'none' : '';
+}
+
+/* ═══════════════ SEARCH ═══════════════ */
+function handleSearch(q) {
+  const res = document.getElementById('search-results');
+  if(!q.trim()) { res.classList.remove('show'); return; }
+  const filtered = users.filter(u =>
+    u.name.toLowerCase().includes(q.toLowerCase()) ||
+    u.handle.toLowerCase().includes(q.toLowerCase()) ||
+    (q.startsWith('#') && trends.some(t=>t.hash.toLowerCase().includes(q.toLowerCase())))
+  );
+  res.innerHTML = filtered.length
+    ? filtered.map(u=>`
+        <div class="search-result-item">
+          <div class="sr-avatar" style="background:linear-gradient(${u.color})">${u.init}</div>
+          <div>
+            <div class="sr-name">${u.name}</div>
+            <div class="sr-handle">@${u.handle}</div>
+          </div>
+        </div>`).join('')
+    + (q.startsWith('#') ? trends.filter(t=>t.hash.toLowerCase().includes(q.toLowerCase())).map(t=>`
+        <div class="search-result-item">
+          <div class="sr-avatar" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">🏷️</div>
+          <div>
+            <div class="sr-name">${t.hash}</div>
+            <div class="sr-handle">${t.count}</div>
+          </div>
+        </div>`).join('') : '')
+    : <div class="search-result-item" style="color:var(--text3)">No results for "${q}"</div>;
+  res.classList.add('show');
+}
+
+let searchHideTimer;
+function showSearch() {
+  clearTimeout(searchHideTimer);
+  const q = document.getElementById('search-input').value;
+  if(q.trim()) document.getElementById('search-results').classList.add('show');
+}
+function hideSearch() {
+  searchHideTimer = setTimeout(()=>document.getElementById('search-results').classList.remove('show'), 200);
+}
+
+/* ═══════════════ THEME ═══════════════ */
+function toggleTheme() {
+  state.theme = state.theme==='dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', state.theme);
+  document.getElementById('theme-toggle').textContent = state.theme==='dark' ? '🌙' : '☀️';
+  const tog = document.getElementById('settings-dark-toggle');
+  if(tog) tog.classList.toggle('on', state.theme==='dark');
+}
+
+/* ═══════════════ TOAST ═══════════════ */
+function showToast(msg, type='info') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = toast ${type};
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(()=>toast.remove(), 2800);
+}
+
+function openNotif() { showToast('3 new notifications 🔔','info'); }
+
+/* ═══════════════ DEMO LOGIN ─ skip for dev ═══════════════ */
+// Auto-login for demo: remove next 4 lines to require real login
+state.user = { name:'You', handle:'you', init:'Y' };
+document.getElementById('auth-screen').style.display='none';
+initApp();
+showToast('Welcome to Pulse! 👋','success');
+</script>
+</body>
+</html>
