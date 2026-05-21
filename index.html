@@ -1,11 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> JS variables</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Business Name Generator</title>
+
+    <style>
+        body{
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+            font-family: Arial, sans-serif;
+        }
+
+        .container{
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 350px;
+        }
+
+        h1{
+            margin-bottom: 20px;
+        }
+
+        #name{
+            font-size: 28px;
+            color: #ff4d4d;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        button{
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ff4d4d;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background: #e63939;
+        }
+    </style>
 </head>
 <body>
-    <script src="variable.js"></script>
+
+    <div class="container">
+        <h1>Business Name Generator</h1>
+
+        <div id="name">Click Generate</div>
+
+        <button onclick="generateName()">
+            Generate Name
+        </button>
+    </div>
+
+    <script>
+        let adjectives = ["Crazy", "Amazing", "Fire"];
+        let shopNames = ["Foods", "Cafe", "Kitchen"];
+        let anotherWords = ["Hub", "Corner", "Point"];
+
+        function generateName(){
+
+            let adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+
+            let shop = shopNames[Math.floor(Math.random() * shopNames.length)];
+
+            let word = anotherWords[Math.floor(Math.random() * anotherWords.length)];
+
+            let businessName = `${adj} ${shop} ${word}`;
+
+            document.getElementById("name").innerText = businessName;
+        }
+    </script>
+
 </body>
 </html>
