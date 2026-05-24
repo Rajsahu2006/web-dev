@@ -1,25 +1,13 @@
-let random = Math.random()
-let a = prompt("Enter first number")
-let b = prompt("Enter operation")
-let c = prompt("Enter second  number")
+let a = 8;
 
+function fact(number) {
+    let arr = Array.from(Array(number + 1).keys());
 
-let obj = {
-    "+":"-",
-    "*":"+",
-    "-":"/",
-    "/":"**",
+    let c = arr.slice(1).reduce((a, b) => {
+        return a * b;
+    });
+
+    console.log(c);
 }
 
-
-if (random > 0.1){
-    //perform correct calculation
-// perform correct calculation
-    console.log(`The result is ${a} ${c} ${b}`);
-    alert(`The result is ${eval(`${a} ${c} ${b}`)}`);
-}
-else{
-    c = obj[c]
-    //perform wrong calculation
-    alert(`The result is ${eval(`${a} ${c} ${b}`)}`);
-}
+fact(a);
