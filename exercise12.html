@@ -3,11 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>facturial calculation</title>
+    <title>DOM </title>
+    <style>
+        .box{
+            /* border: 2px solid black; */
+            eight: 34px ;
+            width: 38px ;
+            padding: 37px ;
+            margin: 34px ;
+            border: 2px solid black;
+            /* background-color: aqua; */
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 700;
+            border-radius: 30px ;
+            justify-content: center;
+            align-items: center;
+            border-color: rgb(255, 0, 0);
+            box-shadow: 2px 2px 2px rgb(146, 98, 98);
+        }
+    </style>
 </head>
 <body>
-    <script src="index.js">
+    <div class="container">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    
+    <script>
+    let box = document.getElementsByClassName("box")
 
+    function getRandomcolor(){
+    let val1 = Math.ceil(0 + Math.random()*255);
+    let val2 = Math.ceil(0 + Math.random()*255);
+    let val3 = Math.ceil(0 + Math.random()*255);
+    return `rgb(${val1},${val2},${val3})`
+    }
+    Array.from(box).forEach(e =>{
+        e.style.backgroundColor = getRandomcolor();
+        e.style.color = getRandomcolor();
+
+    })
     </script>
 </body>
 </html>
