@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .color{
+            background-color: rgb(251, 241, 241);
+            color: rgb(11, 10, 10);
+            cursor: pointer;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="color">Enter</button>
+
+    <h2></h2>
+
+    <script>
+        let color = document.querySelector('button');
+        let body = document.querySelector('body');
+        let h2 = document.querySelector('h2');
+
+        color.addEventListener('click', function () {
+            body.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+        });
+
+        let data = prompt("Enter user name");
+
+        console.log(data);
+
+        let isBool = true;
+
+        h2.innerText = "Hello " + data;
+    </script>
+
+</body>
+</html>

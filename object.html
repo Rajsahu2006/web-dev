@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object fit and object cover property</title>
+    <style>
+        .container {
+            height: 634px;
+            width: 688px;
+            border: 2px solid black;
+            background-color: antiquewhite;
+            background-position: center;
+            background-image: url(https://sp.yimg.com/ib/th/id/OIP.b48AEC4pe2m8o6r61sneKAHaNK?pid=Api&w=148&h=148&c=7&dpr=2&rs=1);
+            /* background-repeat: no-repeat; */
+            background-clip: border-box;
+        }
+
+        img {
+            width: 466px;
+            height: 488px;
+            /* object-fit: cover; */
+            object-fit: scale-down;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- <img src="https://sp.yimg.com/ib/th/id/OIP.b48AEC4pe2m8o6r61sneKAHaNK?pid=Api&w=148&h=148&c=7&dpr=2&rs=1"
+            alt=""> -->
+    </div>
+</body>
+
+</html>
