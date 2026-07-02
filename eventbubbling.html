@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Bubbling</title>
+    <style>
+        .children {
+            background-color: antiquewhite;
+            border: 2px solid black;
+            padding: 34px;
+            margin: 34px;
+            cursor: pointer;
+
+        }
+
+        .child {
+            background-color: rgb(244, 153, 35);
+            border: 2px solid black;
+            padding: 34px;
+            margin: 34px;
+            cursor: pointer;
+
+        }
+
+        .container {
+            background-color: rgb(196, 218, 26);
+            border: 2px solid black;
+            padding: 34px;
+            margin: 34px;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <section class="child">
+            <div class="children">
+                These are the childerns
+            </div>
+        </section>
+
+        <script>
+    document.querySelector(".children").addEventListener("contextmenu", () => {
+        alert("child was clicked");
+    })
+
+    document.querySelector(".children").addEventListener("click", (e) => {
+        alert("container was clicked");
+        e.stopPropagation()
+    })
+       
+
+     // event bubble hoga kisi element ma event lision karenge ko usa or uska parents dono ka event listner activate hoga
+    function getRandomcolor() {
+        let val1 = Math.ceil(Math.random() * 255);
+        let val2 = Math.ceil(Math.random() * 255);
+        let val3 = Math.ceil(Math.random() * 255);
+
+        return `rgb(${val1},${val2},${val3})`
+    }
+
+    setInterval(() => {
+        document.querySelector(".children").style.background = getRandomcolor();
+    }, 1000);
+
+
+    </script>
+</body>
+
+</html>
