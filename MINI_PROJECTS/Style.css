@@ -52,7 +52,7 @@ nav button{
 }
 .sepration{
     height: 7px ;
-    background-color: rgb(100, 96, 96);
+    background-color: rgb(64, 63, 63);
 }
 .btn{
     padding:  3px 8px ;
@@ -146,7 +146,7 @@ section.first > div:nth-child(2){
 
 }
 .feqbox:hover{
-    background-color: rgb(159, 106, 106);
+    background-color: rgb(172, 118, 118);
     color: white;
 }
 .feqbox{

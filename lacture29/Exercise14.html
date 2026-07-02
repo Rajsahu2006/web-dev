@@ -1,0 +1,173 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* body{
+            background-color: rgb(23, 86, 23);
+            color: rgb(249, 251, 249);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgb(0, 0, 0);
+            
+        } */
+        body{
+    background:black;
+    color:lime;
+    font-family:monospace;
+}
+
+.cursor{
+    animation: blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div>Initilizing Hacking...</div>
+    <script src="index.js"></script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Terminal</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <style>
+        *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:black;
+    color:#00ff00;
+    font-family:monospace;
+    overflow:hidden;
+}
+
+
+#matrix{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+}
+
+.container{
+    position:relative;
+    z-index:1;
+}
+.cursor{
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0;
+    }
+}
+
+.progress-container{
+    width:100%;
+    height:20px;
+    border:1px solid #00ff00;
+    margin:20px 0;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#00ff00;
+}
+
+#terminal{
+    margin-top:20px;
+    line-height:1.8;
+}
+#terminal{
+    height:400px;
+    overflow-y:auto;
+    border:1px solid lime;
+    padding:15px;
+}
+
+.progress-container{
+    width:100%;
+    height:20px;
+    border:1px solid lime;
+    margin-bottom:20px;
+}
+
+#bar{
+    width:0%;
+    height:100%;
+    background:lime;
+}
+
+#cmd{
+    width:100%;
+    margin-top:15px;
+    padding:10px;
+    background:black;
+    color:lime;
+    border:1px solid lime;
+}
+button{
+    margin-top:20px;
+    padding:10px 20px;
+    background:lime;
+    color:black;
+    border:none;
+    cursor:pointer;
+}
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix"></canvas>
+
+    <div class="container">
+        <h1>HACKER TERMINAL <span class="cursor">|</span></h1>
+        <button id="download">
+    Download Log
+</button>
+        <div class="progress-container">
+            <div class="progress-bar" id="bar"></div>
+        </div>
+
+        <div id="terminal"></div>
+        <div class="command-box">
+            <input
+                id="cmd"
+                type="text"
+                placeholder="Enter Command..."
+            >
+        </div>
+        <!-- <audio
+            id="beep"
+            src="beep.mp3">
+</audio> -->
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

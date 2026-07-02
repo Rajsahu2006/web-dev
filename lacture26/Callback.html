@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Function</title>
+</head>
+
+<body>
+
+    <div>
+
+        A callback function is a function that is passed as an argument to another function and is executed later when
+        needed.
+    </div>
+    <script>
+        console.log("Hello");
+
+        const fn = () => {
+            console.log("nothing");
+        };
+
+        const callback = (arg, fn) => {
+            console.log(arg);
+            fn();
+        };
+
+        const loadscript = (src, callback) => {
+            let sc = document.createElement("script");
+            sc.src = src;
+
+            sc.onload = () => {
+                callback("yahuu", fn);
+            };
+
+            document.head.append(sc);
+        };
+
+        loadscript(
+            "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js",
+            callback
+        );
+    </script>
+</body>
+
+</html>

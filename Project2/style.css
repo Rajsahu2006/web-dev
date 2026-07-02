@@ -1,0 +1,519 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.border {
+    /* border: 2px solid blue; */
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    height: 100vh;
+}
+
+.justify-content {
+    justify-content: center;
+}
+
+.align-items {
+    align-items: center;
+}
+
+
+.left {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    height: 100vh;
+    /* Spotify mein left panel chota hota hai (Library/Home) */
+    /* background-color: #121212; Dark theme ke liye (Optional) */
+    /* border-radius: 8px;
+        padding: 10px;*/
+}
+
+.right {
+    scrollbar-width: none;
+    width: 25%;
+    width: 75%;
+    /* Right panel bada hota hai (Main content) */
+    /* background-color: #121212; Dark theme ke liye (Optional) */
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.right::-webkit-scrollbar {
+    display: none;
+}
+
+.Home ul li img {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    /* list-style: none;
+    box-shadow: 2px 2px 2px white;
+    color: white; */
+}
+
+.Home ul li {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin-bottom: 15px;
+    color: white;
+    /* Text color ko bhi white karne ke liye */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.heading {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    padding-top: 14px;
+    font-weight: bold;
+}
+
+.library {
+    scrollbar-width: none;
+    overflow-y: auto;
+    gap: 30px;
+    position: relative;
+    padding: 20px;
+    flex: 1;
+
+}
+
+.library::-webkit-scrollbar {
+    display: none;
+}
+
+.plus {
+    flex: 1;
+    ;
+    color: white;
+}
+
+.footer {
+    padding: 20px 16px;
+    margin-top: auto;
+    /* Isse footer hamesha sabse niche wale hisse mein push ho jayega */
+    position: static;
+    bottom: 0;
+}
+
+/* Links ko single column vertical banane ke liye */
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    /* Links ko ek ke niche ek (column) karega */
+    gap: 12px;
+    /* Har link ke beech ki duri */
+}
+
+/* Footer ke links ki design */
+.footer-links a {
+    color: #b3b3b3;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+    width: fit-content;
+    /* Taaki hover effect sirf text par hi dikhe */
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+.main-container {
+    display: flex;
+    /* Ye sidebar aur main content ko barabar me layega */
+    align-items: flex-start;
+    width: 100%;
+    height: 100vh;
+    /* Poori screen ki height lene ke liye */
+}
+
+.right {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.sidebar {
+    width: 25%;
+}
+
+.right.content {
+    height: calc(100vh - 90px);
+    /* 90px player ki height ke liye chhod kar */
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.nav-buttons button {
+    background: #121212;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.signup {
+    background: none;
+    border: none;
+    color: #b3b3b3;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login {
+    background: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.card-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.card {
+    /* background:#181818;
+    width:180px;
+    padding:15px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s; */
+
+    position: relative;
+    background: #181818;
+    width: 180px;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.card:hover {
+    background: #282828;
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.card h3 {
+    margin-top: 10px;
+}
+
+.card p {
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+.playbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #181818;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    box-sizing: border-box;
+}
+
+.play {
+    position: absolute;
+    right: 15px;
+    top: 135px;
+    opacity: 0;
+    transition: all .3s ease;
+}
+
+.play img {
+    width: 50px;
+    cursor: pointer;
+}
+
+.card:hover .play {
+    opacity: 1;
+    top: 120px;
+}
+
+.songbuttons {
+    display: flex;
+    gap: 20px;
+    margin-left: 700px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.songlist {
+    margin-top: 20px;
+    max-height: 350px;
+    overflow-y: auto;
+
+    /* Firefox */
+    scrollbar-width: none;
+}
+
+/* Chrome, Edge, Safari */
+.songlist::-webkit-scrollbar {
+    display: none;
+}
+
+/* .songlist ul{
+    padding: 0 20px;
+}
+
+.songlist ul li{
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 8px 0;
+    cursor: pointer;
+}
+
+.songlist ul li:hover{
+    background-color: #1f1f1f;
+} */
+
+.songlist ul {
+    padding: 10;
+}
+
+.songlist ul li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+    margin: 8px 0;
+
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+
+    background: #121212;
+    color: white;
+
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.songlist ul li:hover {
+    background: #1f1f1f;
+    border-color: #3a3a3a;
+}
+
+.playnow {
+    display: flex;
+}
+
+.musicicon {
+    width: 20px;
+    height: 20px;
+}
+
+.playicon {
+    width: 20px;
+    height: 20px;
+}
+
+.songlist ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.songlist li.active {
+    background: #2a2a2a;
+    border-radius: 8px;
+}
+
+.seekbar {
+    height: 4px;
+    width: 98%;
+    background: white;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 8px;
+    cursor: pointer;
+}
+
+.circle {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: white;
+    position: relative;
+    bottom: 5px;
+    left: 0%;
+    transition: left 0.1s;
+}
+
+.songinfo {
+    color: white;
+    font-weight: bold;
+    width: 250px;
+}
+
+.songtime {
+    margin-left: 350px;
+    font-weight: bold;
+    width: auto;
+
+}
+
+.abovebar {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+
+}
+
+/* .hamburger{
+    display: block;
+} */
+.hamburgercontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+
+@media (max-width: 768px) {
+
+    /* Hamburger ko mobile par show karein */
+    .hamburger {
+        display: block;
+        z-index: 20;
+        /* Taaki ye sabse upar rahe aur click ho sake */
+    }
+
+    /* Left Sidebar jo squeeze ho raha tha, use absolute position dein */
+    .left {
+        padding: 0;
+        position: fixed;
+        top: 0;
+        left: -120%;
+        /* Shuruat mein screen se bahar hidden rahega */
+        width: 300px;
+        /* Ab ye squeeze nahi hoga, fixed width rahega */
+        height: 100vh;
+        background-color: #121212;
+        z-index: 15;
+        transition: all 0.3s ease;
+        /* Smooth sliding effect */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Jab JavaScript se 'show' class add hogi, tab sidebar dikhega */
+    .left.show {
+        left: 0;
+    }
+
+    /* Right content panel ko mobile par full width (100%) karein */
+    .right {
+        width: 100% !important;
+        padding: 10px;
+    }
+
+    /* Playbar elements ko mobile par scale thik karne ke liye */
+    .songbuttons {
+        margin-left: 0 !important;
+        /* Jo 700px gap tha use zero karein */
+    }
+
+    .songtime {
+        margin-left: 0 !important;
+        width: 125px;
+        color: black;
+        padding: 20px 0;
+    }
+}
+
+.volume {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 12px;
+
+    width: 40px;
+
+}
+
+/* Volume container ko explicit block banakar aaju-baju fit karne ke liye */
+.volume {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: auto !important;
+    /* Fixed widths ko reset karne ke liye */
+}
+
+/* Slider line aur icon vertically perfectly center hon */
+.volume img {
+    display: block;
+    object-fit: contain;
+}
+
+.volume .range {
+    display: flex;
+    align-items: center;
+}
+
+#volume-slider {
+    width: 100px;
+    height: 4px;
+    accent-color: #1db954;
+    /* Spotify Green */
+    cursor: pointer;
+    margin: 0;
+}
+
